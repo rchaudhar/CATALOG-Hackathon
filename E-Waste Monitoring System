@@ -1,0 +1,69 @@
+class ElectronicItem:
+    def __init__(self, name, category, purchase_date, status='Active'):
+        self.name = name
+        self.category = category
+        self.purchase_date = purchase_date
+        self.status = status
+    def mark_as_ewaste(self):
+        self.status = 'E-waste'
+    def __repr__(self):
+        return f"{self.name} | {self.category} | {self.purchase_date} | {self.status}"
+class EWasteMonitoringSystem:
+    def __init__(self):
+        self.items = []
+    def add_item(self, name, category, purchase_date):
+        item = ElectronicItem(name, category, purchase_date)
+        self.items.append(item)
+    def mark_item_as_ewaste(self, name):
+        for item in self.items:
+            if item.name == name:
+                item.mark_as_ewaste()
+                print(f"{name} has been marked as E-waste.")
+                return
+        print(f"Item named {name} not found.")
+    def delete_item(self, name):
+        for item in self.items:
+            if item.name == name:
+                self.items.remove(item)
+                print(f"{name} has been deleted.")
+                return
+        print(f"Item named {name} not found.")
+    def display_items(self):
+        if not self.items:
+            print("No items to display.")
+            return
+        print("Name | Category | Purchase Date | Status")
+        print("----------------------------------------")
+        for item in self.items:
+            print(item)
+def main():
+    system = EWasteMonitoringSystem()
+    while True:
+        print("\nE-waste Monitoring System")
+        print("1. Add New Item")
+        print("2. Mark Item as E-waste")
+        print("3. Delete Item")
+        print("4. Display All Items")
+        print("5. Exit")
+        choice = input("Enter your choice (1-5): ")
+        if choice == '1':
+            name = input("Enter item name: ")
+            category = input("Enter item category: ")
+            purchase_date = input("Enter purchase date (e.g., 2022-01-01): ")
+            system.add_item(name, category, purchase_date)
+            print(f"{name} has been added.")
+        elif choice == '2':
+            name = input("Enter the name of the item to mark as E-waste: ")
+            system.mark_item_as_ewaste(name)
+        elif choice == '3':
+            name = input("Enter the name of the item to delete: ")
+            system.delete_item(name)
+        elif choice == '4':
+            system.display_items()
+        elif choice == '5':
+            print("Exited the system.")
+            break
+        else:
+            print("Invalid choice. Please enter a number between 1 and 5.")
+if __name__ == "__main__":
+    main()
